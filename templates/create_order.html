@@ -1,0 +1,118 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Courier Service</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Qtech</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="{%url 'home'%}">Home</a></li>
+      <li><a href="{%url 'create-order'%}">Make Order</a></li>
+      <li><a href="{%url 'orderlist' %}">Order List</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="{%url 'signup'%}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      {%if request.user.is_authenticated %}
+      <li><a href="{%url 'logout'%}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      {%else%}
+      <li><a href="{%url 'login'%}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      {%endif%}
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+    <div class="container">
+
+  
+        <h2>Make Order</h2>
+        <form method="post" enctype='multipart/form-data'>
+        <div class="auth">
+          {% csrf_token %}
+          {{form|crispy}}
+        </div>
+      
+        <div>
+          <h2>Inside of Dhaka</h2>
+          <select id='purpose'class="form-control">
+            <option value="0" selected>Choose</option> 
+            <option value="60">500 gm to 2 kg</option>
+            <option value="70">3 kg</option>
+            <option value="80">4 kg</option>
+            <option value="90">5 kg</option>
+        </select>
+        </div>
+      
+        <div>
+            <h2>Division of Dhaka</h2>
+            <select id='purpose1'class="form-control">
+              <option value="0" selected>Choose</option> 
+              <option value="110">500 gm to 2 kg</option>
+              <option value="130">3 kg</option>
+              <option value="150">4 kg</option>
+              <option value="170">5 kg</option>
+          </select>
+          </div>
+      
+      
+          <div>
+            <h2>Outside of Dhaka</h2>
+            <select id='purpose2'class="form-control">
+              <option value="0" selected>Choose</option> 
+              <option value="130">500 gm to 2 kg</option>
+              <option value="150">3 kg</option>
+              <option value="170">4 kg</option>
+              <option value="190">5 kg</option>
+          </select>
+          </div>
+        </br>
+          <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Submit</button>
+        </form>
+      
+      </div>
+      
+</div>
+<script>
+    $('#purpose').on('change', function () {
+      
+      var x = this.value
+      $("[name='price']").val(x);
+      $('#purpose1').val(0);
+      $('#purpose2').val(0);
+    
+      } 
+    );
+    $('#purpose1').on('change', function () {
+      
+      var x = Number(this.value);
+      y = x + x*0.01;
+      x = y + x*0.5;
+      $("[name='price']").val(x);
+      $('#purpose').val(0);
+      $('#purpose2').val(0);
+      } 
+    );
+    $('#purpose2').on('change', function () {
+      
+      var x = Number(this.value);
+      y = x + x*0.01;
+      x = y + x*0.5;
+      $("[name='price']").val(x);
+      $('#purpose').val(0);
+      $('#purpose1').val(0);
+    });
+    
+    </script>
+</body>
+</html>
